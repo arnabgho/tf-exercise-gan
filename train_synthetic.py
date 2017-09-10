@@ -39,37 +39,37 @@ if __name__ == '__main__':
         # Common generator
         g_net = ToyNet(dim_x, dim_z, dim_h=dim_h, last_act=tf.identity, act=tf.nn.elu, bn=False)
 
-        # Disc. for DCGAN (sigmoid)
-        d_net = ToyNet(1, dim_x, dim_h=dim_h, last_act=tf.sigmoid, act=leaky_relu, bn=False)
-        train_dcgan(data, g_net, d_net, name='DCGAN_' + name,
-                    eval_funcs=[gen_eval_func('DCGAN_' + name)],
-                    **params)
+        ## Disc. for DCGAN (sigmoid)
+        #d_net = ToyNet(1, dim_x, dim_h=dim_h, last_act=tf.sigmoid, act=leaky_relu, bn=False)
+        #train_dcgan(data, g_net, d_net, name='DCGAN_' + name,
+        #            eval_funcs=[gen_eval_func('DCGAN_' + name)],
+        #            **params)
 
-        # Disc. for MADGAN (multi-output)
-        d_net = ToyNet(n_generators + 1, dim_x, dim_h=dim_h, last_act=tf.identity, act=leaky_relu, bn=False)
-        train_madgan(data, g_net, d_net, name='MADGAN_' + name, n_generators=n_generators,
-                     eval_funcs=[gen_eval_func('MADGAN_' + name)],
-                     **params)
+        ## Disc. for MADGAN (multi-output)
+        #d_net = ToyNet(n_generators + 1, dim_x, dim_h=dim_h, last_act=tf.identity, act=leaky_relu, bn=False)
+        #train_madgan(data, g_net, d_net, name='MADGAN_' + name, n_generators=n_generators,
+        #             eval_funcs=[gen_eval_func('MADGAN_' + name)],
+        #             **params)
 
-        # Disc. for WGAN and GoGAN (identity)
-        d_net = ToyNet(1, dim_x, dim_h=dim_h, last_act=tf.identity, act=leaky_relu, bn=False)
-        train_wgan(data, g_net, d_net, name='WGAN_' + name,
-                   eval_funcs=[gen_eval_func('WGAN_' + name)],
-                   **params)
-        train_gogan(data, g_net, d_net, name='GoGAN_' + name,
-                   eval_funcs=[gen_eval_func('GoGAN_' + name)],
-                   **params)
+        ## Disc. for WGAN and GoGAN (identity)
+        #d_net = ToyNet(1, dim_x, dim_h=dim_h, last_act=tf.identity, act=leaky_relu, bn=False)
+        #train_wgan(data, g_net, d_net, name='WGAN_' + name,
+        #           eval_funcs=[gen_eval_func('WGAN_' + name)],
+        #           **params)
+        #train_gogan(data, g_net, d_net, name='GoGAN_' + name,
+        #           eval_funcs=[gen_eval_func('GoGAN_' + name)],
+        #           **params)
 
-        # Encoder-decoder for BEGAN
-        d_enc = ToyNet(dim_ae, dim_x, dim_h=dim_h, last_act=tf.identity, act=leaky_relu, bn=False)
-        d_dec = ToyNet(dim_x, dim_ae, dim_h=dim_h, last_act=tf.identity, act=tf.nn.elu, bn=False)
+        ## Encoder-decoder for BEGAN
+        #d_enc = ToyNet(dim_ae, dim_x, dim_h=dim_h, last_act=tf.identity, act=leaky_relu, bn=False)
+        #d_dec = ToyNet(dim_x, dim_ae, dim_h=dim_h, last_act=tf.identity, act=tf.nn.elu, bn=False)
 
-        train_began(data, g_net, d_enc, d_dec, name='BEGAN_' + name,
-                    eval_funcs=[gen_eval_func('BEGAN_' + name)],
-                    **params)
+        #train_began(data, g_net, d_enc, d_dec, name='BEGAN_' + name,
+        #            eval_funcs=[gen_eval_func('BEGAN_' + name)],
+        #            **params)
         # Encoder-Discriminator for MODEGAN
         # Disc. for MODEGAN (sigmoid)
-        d_enc = ToyNet(dim_ae, dim_x, dim_h=dim_h, last_act=tf.identity, act=leaky_relu, bn=False)
+        d_enc = ToyNet(dim_z, dim_x, dim_h=dim_h, last_act=tf.identity, act=leaky_relu, bn=False)
         d_net = ToyNet(1, dim_x, dim_h=dim_h, last_act=tf.sigmoid, act=leaky_relu, bn=False)
         train_modegan(data, g_net,d_enc, d_net, name='MODEGAN_' + name,
                     eval_funcs=[gen_eval_func('MODEGAN_' + name)],

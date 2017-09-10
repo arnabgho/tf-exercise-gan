@@ -16,7 +16,7 @@ PRNT_INTERVAL = 100
 EVAL_INTERVAL = 2000
 SAVE_INTERVAL = 4000
 
-DATASETS = ['mnist', 'celeba']
+DATASETS = ['synthetic','mnist', 'celeba']
 
 
 # Helper functions
