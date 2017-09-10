@@ -5,6 +5,7 @@ from madgan import *
 from began import *
 from wgan import *
 from gogan import *
+from modegan import *
 from models.toy_models import *
 from eval_funcs import eval_synthetic
 
@@ -66,3 +67,12 @@ if __name__ == '__main__':
         train_began(data, g_net, d_enc, d_dec, name='BEGAN_' + name,
                     eval_funcs=[gen_eval_func('BEGAN_' + name)],
                     **params)
+        # Encoder-Discriminator for MODEGAN
+        # Disc. for MODEGAN (sigmoid)
+        d_enc = ToyNet(dim_ae, dim_x, dim_h=dim_h, last_act=tf.identity, act=leaky_relu, bn=False)
+        d_net = ToyNet(1, dim_x, dim_h=dim_h, last_act=tf.sigmoid, act=leaky_relu, bn=False)
+        train_modegan(data, g_net,d_enc, d_net, name='MODEGAN_' + name,
+                    eval_funcs=[gen_eval_func('MODEGAN_' + name)],
+                    **params)
+
+
