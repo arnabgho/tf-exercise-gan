@@ -70,10 +70,10 @@ def train_UNROLLEDGAN(data, g_net, d_net, name='UNROLLEDGAN',
     D_fake = d_net(G, 'UNROLLEDGAN_D', reuse=True)
 
     #################
-    tf.reset_default_graph()
-    loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=D_real, labels=tf.ones_like(D_real)) +
-                    tf.nn.sigmoid_cross_entropy_with_logits(logits=D_fake, labels=tf.zeros_like(D_fake)))
+    #tf.reset_default_graph()
+    #loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=D_real, labels=tf.ones_like(D_real)) +tf.nn.sigmoid_cross_entropy_with_logits(logits=D_fake, labels=tf.zeros_like(D_fake)))
 
+    loss = tf.reduce_mean(-tf.log(D_real)-tf.log(1-D_fake))
     gen_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "UNROLLEDGAN_G")
     disc_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "UNROLLEDGAN_D")
     # Vanilla discriminator update
@@ -157,8 +157,8 @@ def train_UNROLLEDGAN(data, g_net, d_net, name='UNROLLEDGAN',
         _, cur_lr = sess.run([increment_step, lr])
 
         if it % PRNT_INTERVAL == 0:
-            print('{:10d}, {:1.4f}, {: 1.4f}') \
-                    .format(it, cur_lr, f)
+            print('{:10d}, {:1.4f}') \
+                    .format(it, cur_lr)
 
             # Tensorboard
             cur_summary = sess.run(summaries, feed_dict={x0: batch_xs, z0: sampler(batch_size, dim_z)})
